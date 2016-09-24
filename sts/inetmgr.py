@@ -15,5 +15,6 @@ def connect(socket, conn_type, program, build):
     ElementTree.SubElement(root, 'AppIndex').text = '1'
     ElementTree.SubElement(root, 'Address').text = socket.getsockname()[0]
 
-    s.send('Sts', 'Connect', body=ElementTree.tostring(root))
+    body_str = bytes.decode(ElementTree.tostring(root))
+    s.send('Sts', 'Connect', body=body_str)
     return s

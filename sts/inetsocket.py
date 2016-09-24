@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-import Queue     as pqueue
+import queue     as pqueue
 import socket    as psocket
 import threading as pthread
 import itertools as it
@@ -139,7 +139,7 @@ class Socket(object):
 
             try:
                 start_line, headers, body = queue.get(timeout = AUTO_PING_SECONDS)
-                socket.sendall(inetmsg.build_message(start_line, headers, body))
+                socket.sendall(inetmsg.build_message(start_line, headers, body.encode('utf-8')).encode('utf-8'))
 
             except pqueue.Empty:
                 self._send(queue, inetmsg.RequestLine(method = 'P', uri='/Sts/Ping'))
@@ -168,7 +168,7 @@ class Socket(object):
 
     def _request(self, protocol, command, headers = False, body = False, timeout = None):
 
-        txn_id                   = self._txn_id.next()
+        txn_id                   = next(self._txn_id)
         self._txn_queues[txn_id] = pqueue.Queue()
 
         headers = headers if headers else {}
@@ -256,7 +256,7 @@ class Socket(object):
     def _request_one(self, protocol, command, headers, body, timeout):
 
         iter     = self._request(protocol, command, headers, body, timeout)
-        err, msg = iter.next()
+        err, msg = next(iter)
 
         if (err.code == ineterr.PENDING):
             iter.close()

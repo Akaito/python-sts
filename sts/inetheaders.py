@@ -40,7 +40,7 @@ TRANSFER_ENCODING = Header('x')
 VIA = Header('v')
 
 
-COMPACT_HEADERS = dict([(Header(key), value) for key, value in {
+COMPACT_HEADERS = dict([(Header(key), value) for key, value in list({
     'Accept': ACCEPT,
     'Content-Encoding': CONTENT_ENCODING,
     'Content-Length': CONTENT_LENGTH,
@@ -59,7 +59,7 @@ COMPACT_HEADERS = dict([(Header(key), value) for key, value in {
     'X-Trace-ID': TRACE,
     'Transfer-Encoding': TRANSFER_ENCODING,
     'Via': VIA
-}.items()])
+}.items())])
 
 
 MULTI_HEADERS = frozenset([Header(name) for name in [

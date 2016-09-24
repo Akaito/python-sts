@@ -90,9 +90,9 @@ def _build_header_line(header):
 
 
 def _build_header_lines(headers):
-    return [_build_header_line(header) for header in headers.items()] + ['\r\n']
+    return [_build_header_line(header) for header in list(headers.items())] + ['\r\n']
 
 
 def build_message(start_line, headers, body):
     """Return a string containing an STS message built using the provided start line, headers, and body."""
-    return ''.join([_build_start_line(start_line)] + _build_header_lines(headers) + [body])
+    return ''.join([_build_start_line(start_line)] + _build_header_lines(headers) + [bytes.decode(body)])
