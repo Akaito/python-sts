@@ -1,9 +1,10 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 from setuptools import setup, find_packages
 
 setup(
-    name='python-sts',
+    name='python3-sts',
     version='0.2',
     packages=find_packages()
 )
+
